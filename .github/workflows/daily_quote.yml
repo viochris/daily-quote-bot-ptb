@@ -1,0 +1,47 @@
+name: Daily Quote Bot (PTB)
+
+# TRIGGER: When should this workflow run?
+on:
+  schedule:
+    # Cron Format: 'Minute Hour * * *' (UTC Time)
+    # 00:00 UTC = 07:00 WIB (Western Indonesia Time)
+    - cron: '0 0 * * *'
+  
+  # Allows you to run this workflow manually from the Actions tab (for testing)
+  workflow_dispatch:
+
+# JOBS: What tasks to execute?
+jobs:
+  run-quote-bot:
+    runs-on: ubuntu-latest # Uses a standard Ubuntu runner provided by GitHub
+    
+    steps:
+      # 1. Checkout repository code
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        
+      # 2. Set up Python environment
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11' # Ensure this matches your local Python version
+          
+      # 3. Install required libraries
+      - name: Install Dependencies
+        run: |
+          pip install --upgrade pip
+          # Installing specific libraries used in quote-Telegram-Bot.py
+          # Note: 'python-telegram-bot' is required for the new async delivery method
+          pip install prefect python-dotenv langchain-google-genai python-telegram-bot
+        
+      # 4. RUN THE SCRIPT
+      # We inject the secrets (API Keys) securely into the environment here
+      - name: Run Quote Script
+        env:
+          # These must match os.getenv("...") in your Python script
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        
+        # Make sure the filename matches your python script exactly
+        run: python quote-Telegram-Bot.py

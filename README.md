@@ -11,7 +11,7 @@
 
 Orchestrated by **Prefect**, this bot functions as your personal AI mentor. It leverages **Google's Gemini 2.5 Flash** model via LangChain to generate unique, punchy motivational quotes specifically tailored for programmers, and instantly broadcasts them to a **Telegram Channel** using the robust **Python Telegram Bot (Async)** library. It is built for reliability with automatic retries and modular task execution.
 
-> **💡 Note:** Looking for a simpler, synchronous version? Check out the **[Standard Requests Variant](https://github.com/viochris/trial-simple-quote-bot)**. It uses the lightweight `requests` library for direct HTTP calls without the async overhead of PTB.
+> **💡 Alternative Version:** Looking for a simpler, synchronous version? Check out the **[Standard Requests Variant](https://github.com/viochris/trial-simple-quote-bot)**. It uses the lightweight `requests` library for direct HTTP calls without the async overhead of PTB.
 
 ## ✨ Key Features
 
